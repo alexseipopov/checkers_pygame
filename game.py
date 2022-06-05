@@ -1,10 +1,13 @@
 import pygame
 import sys
 from config import *
+from CheckerRed import Checker_Red
 
 pygame.init()
 
 SCREEN = pygame.display.set_mode(SIZE)
+red_ckeckers = []
+black_checkers = []
 checker = {
     'r': pygame.transform.scale(pygame.image.load('assets/r.png'), (FIELD_SIZE, FIELD_SIZE)),
     'b': pygame.transform.scale(pygame.image.load('assets/b.png'), (FIELD_SIZE, FIELD_SIZE))
@@ -20,6 +23,14 @@ pos = [
     ['r', '-', 'r', '-', 'r', '-', 'r', '-'],
 ]
 fields = []
+
+def create_red():
+    for i in range(8):
+        for j in range(8):
+            if pos[i][j] == 'r':
+                red_ckeckers.append(Checker_Red(i, j))
+    for i in red_ckeckers:
+        print(i)
 
 def build_fields():
     for i in range(8):
@@ -38,8 +49,7 @@ def show_field():
             pygame.draw.rect(SCREEN, color, fields[i][j])
             if pos[i][j] != '-':
                 SCREEN.blit(checker[pos[i][j]], fields[i][j])
-    
-            
+          
 
 
 def update_screen():
@@ -57,6 +67,7 @@ def check_events():
 
 def main():
     build_fields()
+    create_red()
     while True:
         check_events()
         update_screen()
